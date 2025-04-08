@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Mejorada</title>
+</head>
+<body>
+    <div>
+        <h2>Introduce un número</h2>
+        <input id="num1" type="number" placeholder="numero"><br>
+        <h2>Introduce otro número</h2>
+        <input id="num2" type="number" placeholder="numero"><br>
+        <br>
+        <button onclick="sumarNumeros()">Sumar</button><button onclick="multiplicarNumeros()">Multiplicar</button>
+        <br><br>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function sumarNumeros(){
+            //obtenemos el valor de los dos numeros que introduce el usuario
+            let n1 = document.getElementById("num1");
+            let n2 = document.getElementById("num2");
+            // Con .value accedemos al contenido del input
+            let suma =parseInt(n1.value) + parseInt(n2.value);
+            document.getElementById("result").innerHTML= "<b>La suma es: " +suma+ "</b>";
+        }
+        function multiplicarNumeros(){
+            let n1 = document.getElementById("num1");
+            let n2 = document.getElementById("num2");
+            let multiplicacion =n1.value * n2.value;
+
+            document.getElementById("result").innerHTML= "<b>La multiplicación es: " +multiplicacion+ "</b>";
+        }
+    </script>
+</body>
+</html>

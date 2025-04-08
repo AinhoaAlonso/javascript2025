@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas Alumnos Mejorado</title>
+    <style>
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .title_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 60%;
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    .title {
+        color: #333;
+        font-size: 25px;
+        margin-bottom: 15px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .button_container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        width: 60%;
+        margin-top: 20px;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-size: 18px;
+        color: #333;
+    }
+
+        
+    </style>
+</head>
+<body>
+    <div class="title_container">
+        <h2 class="title">Introduce tu nota</h2>
+        <input id="nota" type="number" placeholder="Escribe tu nota">
+        <br>
+        <button onclick="nuevaNota()">Agrega tu Nota</button>
+    </div>
+    <br><br>
+    <div class="button_container">
+        <button onclick="totalAprobados();">Aprobados</button>
+        <button onclick="calcularMedia();">Nota Media</button>
+        <button onclick="notaAlta();">Nota Alta</button>
+        <button onclick="notaBaja();">Nota Baja</button>
+    </div>
+    <br>
+    <button onclick="borrarNotas();">Borrar Nota</button>
+    <br><br>
+    <div id="result"></div>
+
+    <script>
+        //Array de notas
+        let notas =[7,5,2,4,9,8,7,6,1,2,4,8,5];
+        function totalAprobados(){
+            let totalAprobados = 0;
+            for(let n of notas){
+                if(n>=5){
+                    totalAprobados++;
+                }
+            }
+            document.getElementById("result").innerHTML = "Total aprobados: " +totalAprobados
+        }
+        function calcularMedia(){
+            if(notas.length>0){
+                let notaMedia = 0;
+                let sumaNotas = 0;
+
+                for(let n of notas){
+                    sumaNotas = sumaNotas + n;
+                }
+                notaMedia = sumaNotas/notas.length
+                document.getElementById("result").innerHTML = "Nota media: " +notaMedia
+            }else{
+                document.getElementById("result").innerHTML = "<b> No hay notas <b>"
+            }
+            
+        }
+        function notaAlta(){
+            if(notas.length>0){
+                let notaMayor = notas[0];
+
+                for(let n of notas){
+                    if (n > notaMayor){
+                        notaMayor = n;
+                    }
+                }
+                document.getElementById("result").innerHTML = "La nota mayor es: " +notaMayor
+            }else{
+                document.getElementById("result").innerHTML = "<b> No hay notas <b>"
+            }
+            
+        }
+        function notaBaja(){
+            if(notas.length>0){
+                let notaMenor = notas[0];
+
+                for(let n of notas){
+                    if (n < notaMenor){
+                        notaMenor = n;
+                    }
+                }
+                document.getElementById("result").innerHTML = "La nota menor es: " +notaMenor
+            }else{
+                document.getElementById("result").innerHTML = "<b> No hay notas <b>"
+            }
+            
+        }
+        function nuevaNota(){
+            let nota = document.getElementById("nota").value;
+            if(nota >0 && nota<=10){
+                notas.push(parseInt(nota));    
+            }else{
+                alert("Nota no valida");
+            }
+            //console.log(notas);
+        }
+        function borrarNotas(){
+            notas=[];
+        }
+
+    </script>
+</body>
+</html>

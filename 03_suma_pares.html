@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suma Pares</title>
+</head>
+<body>
+    <button onclick="sumaDeNumerosPares()">Suma Pares</button>
+
+    <script>
+        function sumaDeNumerosPares(){
+            let n1 = prompt("Introduce el primer valor del rango para sumar");
+            let n2 = prompt("Introduce el segundo valor del rango para sumar");
+            let suma = 0;
+            let mayor, menor;
+
+            if(n1>n2){
+                mayor = n1;
+                menor = n2;
+            } else{
+                mayor = n2;
+                menor = n1;
+            }
+            for(let i=menor;i<=mayor;i++){
+                if(i%2==0){
+                    console.log(i);//Con esto veo en la consola si me esta cogiendo los numeros pares entre el rango
+                    suma = parseInt(suma) + parseInt(i);
+                }
+            }
+            alert("La suma es: " + suma);
+        }
+
+    </script>
+</body>
+</html>

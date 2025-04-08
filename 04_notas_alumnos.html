@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas Alumnos</title>
+</head>
+<body>
+    <button onclick="nuevaNota()">Nueva nota</button>
+    <br><br>
+    <button onclick="totalAprobados();">Aprobados</button>
+    <button onclick="calcularMedia();">Nota Media</button>
+    <button onclick="notaAlta();">Nota Alta</button>
+    <button onclick="notaBaja();">Nota Baja</button>
+
+    <script>
+        //Array de notas
+        let notas =[7,5,2,4,9,8,7,6,1,2,4,8,5];
+        function totalAprobados(){
+            let totalAprobados = 0;
+            // 1ª 
+            /*for(let i = 0;i<notas.length;i++){
+                if(notas[i]>=5){
+                    totalAprobados++; // Es igual que totalAprobador = totalAprobados +1
+                }
+            }*/
+            // 2ª
+            for(let n of notas){
+                if(n>=5){
+                    totalAprobados++;
+                }
+            }
+            alert("Total aprobados: " +totalAprobados);
+        }
+        function calcularMedia(){
+            let notaMedia = 0;
+            let sumaNotas = 0;
+
+            for(let n of notas){
+                sumaNotas = sumaNotas + n;
+            }
+            notaMedia = sumaNotas/notas.length
+            alert("Nota media: " + notaMedia);
+        }
+        function notaAlta(){
+            let notaMayor = notas[0];
+
+            for(let n of notas){
+                if (n > notaMayor){
+                    notaMayor = n;
+                }
+            }
+            alert("La nota mayor es: " + notaMayor);
+        }
+        function notaBaja(){
+            let notaMenor = notas[0];
+
+            for(let n of notas){
+                if (n < notaMenor){
+                    notaMenor = n;
+                }
+            }
+            alert("La nota menor es: " + notaMenor);
+        }
+        function nuevaNota(){
+            //Con esto nos aseguramos que mientras la nota no este en el rango adecuado(0 y 10) nos va a pedir que la sigamos poniendo.
+            let nota;
+            do {
+                nota = prompt("Introduce nueva nota:");
+                console.log(notas);
+            }while (nota<0 || nota>10);
+            
+            notas.push(parseInt(nota));
+            console.log(notas);
+        }
+
+    </script>
+</body>
+</html>
