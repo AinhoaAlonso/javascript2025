@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador</title>
+</head>
+<body>
+    <!--Buscador de una temática-->
+    <div>
+        <h1>BUSCADOR</h1>
+        <input type="text" id="buscador">
+        <button onclick="buscar()">Buscar</button>
+        <div id="listado-resultados"></div>
+    </div>
+
+    <script>
+       let datos=[
+        "deportes|http://www.marca.es",
+        "libros|http://www.puntolibro.es",
+        "deportes|http://www.todofutbol.com",
+        "libros|http://www.fnac.es",
+        "cocina|http://www.fogones.es",
+        "juegos|http://www.game.es"
+        ]; 
+
+        function buscar(){
+            let urls =[];
+            let html = "";
+            let temaBuscado = document.getElementById("buscador").value;
+            console.log(temaBuscado);
+
+            for(let dato of datos){
+                let partes = dato.split("|");
+                console.log(partes);
+                
+                if(temaBuscado == partes[0]){
+                    urls.push(partes[1]);
+                }
+            }
+            for(let url of urls){
+                html = "<br>" +html +url+ "<br>";
+            }
+            document.getElementById("listado-resultados").innerHTML=html;
+        }
+    </script>
+</body>
+</html>
