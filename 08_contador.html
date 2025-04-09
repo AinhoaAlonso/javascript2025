@@ -5,40 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contador</title>
     <style>
-        button {
-            background-color: #4CAF50; /* Verde */
-            color: white; /* Texto blanco */
-            border: none; /* Sin borde */
-            padding: 10px 20px; /* Espaciado interno */
-            text-align: center; /* Centrado del texto */
-            text-decoration: none; /* Sin subrayado */
-            display: inline-block; /* Para alineación */
-            font-size: 16px; /* Tamaño de fuente */
-            margin: 4px 2px; /* Margen */
-            cursor: pointer; /* Cambia el cursor a mano */
-            border-radius: 5px; /* Bordes redondeados */
-            transition: background-color 0.3s ease; /* Efecto de transición */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
         }
-    
+
+        h3 {
+            color: #333;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            padding: 8px;
+            font-size: 16px;
+            width: 50%;
+            text-align: center;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #numero {
+            font-size: 40px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            margin: 10px auto;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
         button:hover {
-            background-color: #45a049; /* Color más oscuro al pasar el mouse */
+            background-color: #45a049;
+        }
+
+        div {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <br>
     <div align="center">
-        <h3>Limite</h3>
+        <h3>Escribe el límite</h3>
         <input type="text" id="limite">
+        <div id="mensajeLimiteVacio"></div>
     </div>
     <br>
     <div align="center">
-        <div id="numero" style="font-family: 20px; border: 1px solid #4CAF50; width: 30%; display: inline-block;">
+        <div id="numero">
         </div>
     </div>
     <br><br>
     <div align="center">
-        <button onclick="contadorNumeros()" style="display: inline-block;">CONTAR</button>
+        <button onclick="contadorNumeros()">CONTAR</button>
     </div>
 
     <script>
@@ -46,26 +87,33 @@
         let ascendente = true;
         document.getElementById("numero").innerHTML = numero;
         
+        
         function contadorNumeros(){
             let limiteMinimo = 0;
             let limiteMaximo = document.getElementById("limite").value;
+            console.log(limiteMaximo);
 
-            if(ascendente==true){
-                numero = numero + 1;
-                document.getElementById("numero").innerHTML = numero;
-                console.log(numero);
-                if(numero == limiteMaximo){
-                    ascendente = false;
-                }
+            if(limiteMaximo == ""){
+                document.getElementById("mensajeLimiteVacio").innerHTML="Tienes que poner un limite numérico"
             }else{
-                numero = numero - 1;
-                document.getElementById("numero").innerHTML = numero;
-                console.log(numero);
-                if(numero == limiteMinimo){
-                    ascendente = true;
+                document.getElementById("mensajeLimiteVacio").innerHTML="";
+                if(ascendente == true){
+                    numero ++;
+                    document.getElementById("numero").innerHTML = numero;
+                    console.log(numero);
+                    if(numero == limiteMaximo){
+                        ascendente = false;
+                    }
+                }else{
+                    numero --;
+                    document.getElementById("numero").innerHTML = numero;
+                    console.log(numero);
+                    if(numero == limiteMinimo){
+                        ascendente = true;
+                    }
                 }
             }
-        
+            
         }
         
     </script>
