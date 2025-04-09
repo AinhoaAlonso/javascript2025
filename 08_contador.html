@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador</title>
+    <style>
+        button {
+            background-color: #4CAF50; /* Verde */
+            color: white; /* Texto blanco */
+            border: none; /* Sin borde */
+            padding: 10px 20px; /* Espaciado interno */
+            text-align: center; /* Centrado del texto */
+            text-decoration: none; /* Sin subrayado */
+            display: inline-block; /* Para alineación */
+            font-size: 16px; /* Tamaño de fuente */
+            margin: 4px 2px; /* Margen */
+            cursor: pointer; /* Cambia el cursor a mano */
+            border-radius: 5px; /* Bordes redondeados */
+            transition: background-color 0.3s ease; /* Efecto de transición */
+        }
+    
+        button:hover {
+            background-color: #45a049; /* Color más oscuro al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <div align="center">
+        <h3>Limite</h3>
+        <input type="text" id="limite">
+    </div>
+    <br>
+    <div align="center">
+        <div id="numero" style="font-family: 20px; border: 1px solid #4CAF50; width: 30%; display: inline-block;">
+        </div>
+    </div>
+    <br><br>
+    <div align="center">
+        <button onclick="contadorNumeros()" style="display: inline-block;">CONTAR</button>
+    </div>
+
+    <script>
+        let numero = 0;
+        let ascendente = true;
+        document.getElementById("numero").innerHTML = numero;
+        
+        function contadorNumeros(){
+            let limiteMinimo = 0;
+            let limiteMaximo = document.getElementById("limite").value;
+
+            if(ascendente==true){
+                numero = numero + 1;
+                document.getElementById("numero").innerHTML = numero;
+                console.log(numero);
+                if(numero == limiteMaximo){
+                    ascendente = false;
+                }
+            }else{
+                numero = numero - 1;
+                document.getElementById("numero").innerHTML = numero;
+                console.log(numero);
+                if(numero == limiteMinimo){
+                    ascendente = true;
+                }
+            }
+        
+        }
+        
+    </script>
+</body>
+</html>
