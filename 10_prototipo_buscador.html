@@ -28,11 +28,12 @@
             let urls =[];
             let html = "";
             let temaBuscado = document.getElementById("buscador").value;
+            temaBuscado = temaBuscado.toLowerCase();
             console.log(temaBuscado);
 
             for(let dato of datos){
                 let partes = dato.split("|");
-                console.log(partes);
+                //console.log(partes);
                 
                 if(temaBuscado == partes[0]){
                     urls.push(partes[1]);
