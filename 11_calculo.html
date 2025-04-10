@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculo</title>
+</head>
+<body>
+    <!--¿Hasta que numero tengo que sumar empezando por 1 hasta llegar al valor 1000?-->
+    <div>
+        <br>
+        <h1>¿Hasta que número tengo que sumar empezando por 1 hasta llegar al valor 1000?</h1>
+        <button onclick="sumaDeNumeros()">Responder</button>
+        <br><br>
+        <div id="resultado"></div>
+    </div>
+
+    <script>
+        function sumaDeNumeros(){
+            let numeroMaximo = 1000;
+            let totalSuma = 0;
+            let contador = 1
+            while(totalSuma<numeroMaximo){
+                totalSuma = totalSuma + contador;
+                contador = contador + 1;
+            }
+            document.getElementById("resultado").innerHTML = contador;
+            console.log(contador);
+        }
+    </script>
+</body>
+</html>

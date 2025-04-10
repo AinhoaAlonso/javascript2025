@@ -4,6 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+    
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+    
+        input[type="text"] {
+            border: 1px solid #af4c96;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            width: 50%;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+    
+        button {
+            background-color: #af4c96;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #af4c96;
+        }
+    
+        #listado-resultados {
+            margin-top: 5px;
+            font-size: 16px;
+            color: #555;
+            text-align: left;
+            display: inline-block;
+            width: 60%;
+        }
+    
+        div {
+            margin: 20px auto;
+            width: 80%;
+        }
+    </style>
 </head>
 <body>
     <!--Buscador de una temática-->
@@ -33,7 +88,6 @@
 
             for(let dato of datos){
                 let partes = dato.split("|");
-                //console.log(partes);
                 
                 if(temaBuscado == partes[0]){
                     urls.push(partes[1]);
@@ -43,6 +97,7 @@
                 html = "<br>" +html +url+ "<br>";
             }
             document.getElementById("listado-resultados").innerHTML=html;
+            document.getElementById("buscador").value = "";
         }
     </script>
 </body>
