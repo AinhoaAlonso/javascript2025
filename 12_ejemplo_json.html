@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo JSON</title>
+</head>
+<body>
+    <div>
+        <!--Datos alumnos: nombre, curso y nota-->
+        Nombre: <input type="text" id="nombre">
+        <br><br>
+        Curso: <input type="text" id="curso">
+        <br><br>
+        Nota: <input type="number" id="nota">
+        <br><br>
+        <button onclick="guardar()">Guardar</button><button onclick="visualizar()">Ver dato</button>
+    </div>
+    <br>
+    <div id="resultado"></div>
+    
+    <script>
+        let alumno;
+        let alumnos=[];
+        function guardar(){
+            let txtNombre = document.getElementById("nombre").value;
+            let txtCurso = document.getElementById("curso").value;
+            let txtNota = document.getElementById("nota").value;
+            alumno ={
+                "nombre": txtNombre,
+                "curso": txtCurso,
+                "nota": txtNota
+            };
+            alumnos.push(alumno);
+        }
+        function visualizar(){
+            let datosAlumno = `Te llamas ${alumno.nombre} estás en el curso ${alumno.curso} tu nota es ${alumno.nota}`;
+            document.getElementById("resultado").innerHTML = datosAlumno;
+
+            console.log(alumnos);
+        }
+    </script>
+
+</body>
+</html>
