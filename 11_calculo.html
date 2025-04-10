@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Asi llamamos al archivo js donde tenemos nuesto codigo javascript-->
+    <script src="js/calculo.js"></script>
     <title>Calculo</title>
 </head>
 <body>
@@ -14,19 +16,6 @@
         <br><br>
         <div id="resultado"></div>
     </div>
-
-    <script>
-        function sumaDeNumeros(){
-            let numeroMaximo = 1000;
-            let totalSuma = 0;
-            let contador = 1
-            while(totalSuma<numeroMaximo){
-                totalSuma = totalSuma + contador;
-                contador = contador + 1;
-            }
-            document.getElementById("resultado").innerHTML = contador;
-            console.log(contador);
-        }
-    </script>
+   
 </body>
 </html>
