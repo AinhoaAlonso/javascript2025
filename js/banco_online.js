@@ -19,11 +19,12 @@ function ingresarDineroAlAbrirCuenta(){
         usuarioBanco.saldoActual = usuarioBanco.ingresoInicial;
         limpiarMensajes();
 
-        // Solo lo guarda si no hay movimientos (primera vez)
+        // Solo lo guarda si no hay movimientos anteriores
         if(usuarioBanco.movimientos.length === 0){
             usuarioBanco.movimientos.push({
                 "descripcion": "Ingreso inicial",
-                "cantidad": usuarioBanco.ingresoInicial
+                "cantidad": usuarioBanco.ingresoInicial,
+                "fecha": new Date().toLocaleDateString()
             });
         }
     }
@@ -38,7 +39,8 @@ function ingresarDinero(){
     } 
     usuarioBanco.movimientos.push({
         "descripcion": "Ingreso",
-        "cantidad": nuevoIngreso
+        "cantidad": nuevoIngreso,
+        "fecha": new Date().toLocaleDateString()
     });
     usuarioBanco.saldoActual += nuevoIngreso;
     limpiarMensajes();
@@ -59,7 +61,8 @@ function extraerDinero(){
     }
     usuarioBanco.movimientos.push({
         "descripcion": "Extracción",
-        "cantidad": -sacarDinero
+        "cantidad": -sacarDinero,
+        "fecha": new Date().toLocaleDateString()
     });
     
     usuarioBanco.saldoActual -= sacarDinero;
@@ -84,7 +87,7 @@ function mostrarSaldoMovimientos(){
 
     for (let movimiento of usuarioBanco.movimientos) {
         let cantidadFormateada = movimiento.cantidad >= 0 ? `+${movimiento.cantidad}` : `${movimiento.cantidad}`;
-        listadoMovimientos += `${movimiento.descripcion}: ${cantidadFormateada}€<br>`;  
+        listadoMovimientos += `${movimiento.fecha} ${movimiento.descripcion}: ${cantidadFormateada}€<br>`;  
     }
     document.getElementById("movimientos").innerHTML = listadoMovimientos;
 }
