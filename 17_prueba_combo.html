@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <select id="ciudades">
+        <option value="caceres">Cáceres</option>
+        <option value="madrid">Madrid</option>
+        <option value="bilbao">Bilbao</option>
+        <option value="valencia">Valencia</option>
+    </select>
+    <button onclick="verCiudad()">Ver ciudad seleccionada</button>
+
+    <script>
+        function verCiudad(){
+            let ciudadSeleccionada = document.getElementById("ciudades").value;
+            console.log(ciudadSeleccionada);
+        }
+    </script>
+</body>
+</html>
