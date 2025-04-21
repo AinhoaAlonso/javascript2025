@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/banco_online.css">
+    <script src="js/banco_online.js"></script>
+    <title>Banco Online</title>
+</head>
+<body>
+    <div id="main-container">
+        <div id="title-container">
+            <h1>Banco Online</h1>
+        </div>
+        <div id="text-container">
+            <div id="ingreso-wrapper">
+                <div>Nombre de cliente</div>
+                <input type="text" id="nombre-usuario-banco-input" placeholder="Nombre completo">
+                <div>Haz un ingreso</div>
+                <input type="number" id="ingreso-inicial-input" placeholder="Introduce la cantidad a ingresar">
+                <div id="errorIngresoMenorIgualCero"></div>
+                <button onclick="ingresarDineroAlAbrirCuenta()">Guardar</button>
+            </div>
+        </div>
+        <div id="actions-movements-wrapper">
+            <div id="ingresar-extraer-wrapper">
+                <div>Operación a realizar</div>
+                <input type="number" id="cantidad-input" placeholder="Introduce la cantidad">
+                <button onclick="ingresarDinero()">Ingresar</button>
+                <button onclick="extraerDinero()">Extraer</button>  
+                <br>
+                <div id="mensajeDescubierto"></div>
+            </div>
+            <div id="movimientos-wrapper">
+                <div id="saludo-bienvenida"></div>
+                <div id="saldo-actual"></div>
+                <h3>Movimientos</h3>
+                <div id="movimientos"></div>
+                <button onclick="mostrarSaldoMovimientos()">Saldo y Movimientos</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

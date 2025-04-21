@@ -1,0 +1,118 @@
+/* Reset limpio */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F6E9E2;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px;
+}
+
+#main-container {
+    background: #FFFFFF;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+h1 {
+    color: #333333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+#actions-movements-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+#ingreso-wrapper,
+#ingresar-extraer-wrapper,
+#movimientos-wrapper {
+    background: #FFFFFF;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-color: #D97B57;
+    box-shadow: 0 0 0 3px rgba(217, 123, 87, 0.25);
+    outline: none;
+}
+
+button {
+    background-color: #D97B57;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px 3px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #BF6243;
+}
+
+#saldo-actual {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 15px 0;
+    text-align: center;
+}
+
+/* Estilo para movimientos */
+#movimientos{
+    margin: 6px 0;
+    padding: 8px 12px;
+    background: #F0D4C1;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+#movimientos:hover {
+    background: #E7C2AD;
+}
+
+/* Saldo positivo o negativo */
+.saldo-positivo{
+    color: 	rgb(37, 110, 37);
+}
+
+.saldo-negativo{
+    color: #e4380d;
+}
+
