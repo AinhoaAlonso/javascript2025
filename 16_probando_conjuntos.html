@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conjuntos</title>
+</head>
+<body>
+    <button onclick="guardar()">Guardar</button><input type="text" id="nombre" placeholder="Nombre"><br>
+    <button onclick="mostrar()">Mostrar</button>
+    <button onclick="crearDesdeArray()">Conjunto creado desde un array existente</button>
+    <div id="mostrar-nombres"></div>
+
+    <script>
+        //Los conjuntos no permiten duplicados
+        let nombres = new Set();
+
+        //funcion crear un conjunto desde un array
+        function crearDesdeArray(){
+            let existentes = ["c5", "c2", "c3", "c4", "c2", "c1", "c3"];
+            //Crea un conjunto desde ese array y quita los duplicados
+            let otrosDatos = new Set(existentes);
+            console.log(otrosDatos);
+        }
+        function guardar(){
+            let nombre = document.getElementById("nombre").value;
+            //Como no da un error si intentas agregar un nombre duplicado vamos a poner una condicion para que verifique si está el contacto
+            if(nombres.has(nombre)==true){
+                alert("Ese nombre ya existe");
+            }else{
+                nombres.add(nombre);
+            }
+        }
+        function mostrar(){
+            for(let n of nombres){
+                console.log(n);
+            }
+        }
+    </script>
+</body>
+</html>
