@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Contactos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        h3 {
+            color: #555;
+            text-align: center;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #resultadoGuardar {
+            font-weight: bold;
+            color: #d9534f;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        a img {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Agenda de Contactos</h1>
+        <h3>Introduce tus datos personales</h3>
+        <input type="text" id="nombreContacto" placeholder="Nombre"><br><br>
+        <input type="text" id="emailContacto" placeholder="Email"><br><br>
+        <input type="number" id="telefono" placeholder="Teléfono"><br><br>
+        <button onclick="guardarContacto()">Guardar</button>
+        <br><br>
+        <div id="resultadoGuardar"></div>
+        <br>
+        <button onclick="mostrarContactos()">Mostrar</button>
+    </div>
+    <br>
+    <table id="tablaContactos"></table>
+    <script>
+        //Impedir que los nombres se repitan
+        let contactos =[];
+        function guardarContacto(){
+            let nombreContacto=document.getElementById("nombreContacto").value;
+            let emailContacto=document.getElementById("emailContacto").value;
+            let telefonoContacto=document.getElementById("telefono").value;
+            let repetido = false;
+            console.log("contactos",contactos);
+
+            if(nombreContacto == ""){
+                document.getElementById("resultadoGuardar").innerHTML = "No puedes guardar un contacto vacío";
+            }else{
+                for(let contacto of contactos){
+                    if(nombreContacto == contacto.nombre){
+                    repetido = true;
+                    }
+                }
+                if(repetido == false){
+                    let contacto ={
+                        "nombre":nombreContacto,
+                        "email":emailContacto,
+                        "telefono":telefonoContacto
+                    }
+                    contactos.push(contacto);
+                    document.getElementById("resultadoGuardar").innerHTML = "Contacto guardado correctamente";
+                }else{
+                //alert("El contacto ya está creado");
+                document.getElementById("resultadoGuardar").innerHTML = "¡El contacto ya existe!";
+            }
+            //limpia la caja de texto
+            document.getElementById("nombreContacto").value = "";
+            document.getElementById("emailContacto").value = "";
+            document.getElementById("telefono").value = "";
+            } 
+            
+        }
+        function mostrarContactos(){
+            let html = "<tr><th>Nombre</th><th>Email</th><th>Telefono</th></tr>";
+            for(let i=0;i<contactos.length;i++){
+                html += `<tr><td>${contactos[i].nombre}</td><td>${contactos[i].email}</td><td>${contactos[i].telefono}</td><td><a onclick="borrarContacto(${i});"><img src="images/papelera.png" height='20px' width='20px'></a><br></tr>`;
+            }
+            
+            document.getElementById("tablaContactos").innerHTML = html;
+        }
+        function borrarContacto(posicionContacto){
+            //Borra el contacto que este en la posicion 'posicionContacto'
+            contactos.splice(posicionContacto,1);
+            mostrarContactos();
+        }
+    </script>
+</body>
+</html>

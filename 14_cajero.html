@@ -107,6 +107,62 @@
         <table id="tabla">
         </table>
     </div>
+    <script>
+        let saldo = 0;
+        let movimientos = [];
+
+        //funcion que recoge el saldo inicial
+        function grabarDinero(){
+            saldo = parseFloat(document.getElementById("saldoInicial").value);
+            if(saldo<0){
+                saldo = 0;
+                alert("El saldo inicial no puede ser negativo")
+            }
+        }
+
+        //funcion que ingrese cantidades de dinero, recogemos la cantidad que introduce el usuario
+        function ingresarDinero(){
+            let cantidad = parseFloat(document.getElementById("operaciones").value);
+            let concepto = document.getElementById("concepto").value;
+            saldo += cantidad;
+            let movimiento ={
+                "cantidad": cantidad,
+                "tipo":"ingreso",
+                "concepto": concepto
+            }
+            movimientos.push(movimiento);
+            limpiar();
+        }
+        //funcion que retira cantidades de dinero del ingreso inicial
+        function retirarDinero(){
+            let cantidad = parseFloat(document.getElementById("operaciones").value);
+            let concepto = document.getElementById("concepto").value;
+            saldo -= cantidad;
+            let movimiento ={
+                "cantidad": cantidad,
+                "tipo":"retirada",
+                "concepto": concepto
+            }
+            movimientos.push(movimiento);
+            limpiar();
+        }
+
+        //funcion que muestra los movimientos y el saldo actual
+        function mostrarDinero(){
+            let html="<tr><th>Tipo</th><th>Cantidad</th><th>Concepto</th>";
+            for(let movimiento of movimientos){
+                html += `<tr><td>${movimiento.tipo}</td><td>${movimiento.cantidad}</td><td>${movimiento.concepto}</td></tr>`;
+            }
+            document.getElementById("tabla").innerHTML = html;
+        }
+
+        //Borra el contenido de las cajas y lleva el cursor a la primera
+        function limpiar(){
+            document.getElementById("operaciones").value ="";
+            document.getElementById("concepto").value = "";
+            
+        }
+    </script>
 </body>
 </html> 
 

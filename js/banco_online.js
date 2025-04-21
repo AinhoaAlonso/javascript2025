@@ -24,15 +24,19 @@ function ingresarDineroAlAbrirCuenta(){
             usuarioBanco.movimientos.push({
                 "descripcion": "Ingreso inicial",
                 "cantidad": usuarioBanco.ingresoInicial,
-                "fecha": new Date().toLocaleDateString()
+                "fecha": new Date().toLocaleDateString(),
+                "saldo": usuarioBanco.ingresoInicial
             });
         }
+        // Bloquear el botón de ingreso inicial
+        document.getElementById("boton-ingreso-inicial").disabled = true;
     }
     console.log("Cuenta creada", usuarioBanco);
 }
 
 function ingresarDinero(){
     let nuevoIngreso = parseFloat(document.getElementById("cantidad-input").value);
+    let saldo = usuarioBanco.saldoActual + nuevoIngreso;
     if (isNaN(nuevoIngreso) || nuevoIngreso <= 0) {
         document.getElementById("errorIngresoMenorIgualCero").innerHTML = "Ingresa una cantidad válida mayor a 0€";
         return;
@@ -40,11 +44,13 @@ function ingresarDinero(){
     usuarioBanco.movimientos.push({
         "descripcion": "Ingreso",
         "cantidad": nuevoIngreso,
-        "fecha": new Date().toLocaleDateString()
+        "fecha": new Date().toLocaleDateString(),
+        "saldo": saldo
     });
     usuarioBanco.saldoActual += nuevoIngreso;
     limpiarMensajes();
     document.getElementById("cantidad-input").value = "";
+    document.getElementById("cantidad-input").focus();
     console.log("Nuevo saldo tras ingreso", usuarioBanco);
 
 }
@@ -52,6 +58,7 @@ function ingresarDinero(){
 function extraerDinero(){
     limpiarMensajes();
     let sacarDinero = parseFloat(document.getElementById("cantidad-input").value);
+    let saldo = usuarioBanco.saldoActual - sacarDinero;
     if(isNaN(sacarDinero) || sacarDinero <=0){
         document.getElementById("errorIngresoMenorIgualCero").innerHTML = "Extraer una cantidad valida mayor a 0€";
         return;
@@ -62,7 +69,8 @@ function extraerDinero(){
     usuarioBanco.movimientos.push({
         "descripcion": "Extracción",
         "cantidad": -sacarDinero,
-        "fecha": new Date().toLocaleDateString()
+        "fecha": new Date().toLocaleDateString(),
+        "saldo": saldo
     });
     
     usuarioBanco.saldoActual -= sacarDinero;
@@ -76,7 +84,7 @@ function mostrarSaldoMovimientos(){
     document.getElementById("saludo-bienvenida").innerHTML = saludoBienvenida;
 
     const saldoActualElemento = document.getElementById("saldo-actual");
-    saldoActualElemento.innerHTML = `Saldo ${usuarioBanco.saldoActual} €`;
+    saldoActualElemento.innerHTML = `Saldo Actual ${usuarioBanco.saldoActual} €`;
     if (usuarioBanco.saldoActual >= 0) {
         saldoActualElemento.className = 'saldo-positivo';
     } else {
@@ -87,7 +95,7 @@ function mostrarSaldoMovimientos(){
 
     for (let movimiento of usuarioBanco.movimientos) {
         let cantidadFormateada = movimiento.cantidad >= 0 ? `+${movimiento.cantidad}` : `${movimiento.cantidad}`;
-        listadoMovimientos += `${movimiento.fecha} ${movimiento.descripcion}: ${cantidadFormateada}€<br>`;  
+        listadoMovimientos += `${movimiento.fecha} ${movimiento.descripcion}: ${cantidadFormateada} € Saldo ${movimiento.saldo} €<br>`;  
     }
     document.getElementById("movimientos").innerHTML = listadoMovimientos;
 }
