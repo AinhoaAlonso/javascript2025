@@ -12,6 +12,10 @@
             background-color: #f0f4f8;
             color: #333;
         }
+        #main-container{
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+        }
     
         h1 {
             text-align: center;
@@ -78,14 +82,17 @@
     </style>
 </head>
 <body onload="cargarTematicas()">
-
-    <div>
-        <h1>BUSCADOR</h1>
-        <!--<input type="text" id="buscador">-->
-        <select name="tematica" id="tematicaElegida" onchange="buscar()" ></select>
-        <!--<button onclick="buscar()">Buscar</button>-->
-        <br><br>
-        <table id="tabla-resultados"></table>
+    <div id="main-container">
+        <div id="left-wrapper">
+            <h1>BUSCADOR</h1>
+            <!--Añadimos onchange para que cambie al seleccionar sin necesidad de boton-->
+            <select name="tematica" id="tematicaElegida" onchange="buscar()" ></select>
+            <br><br>
+            <table id="tabla-resultados"></table>
+        </div>
+        <div id="right-wrapper">
+            <h1>AÑADIR TEMÁTICA</h1>
+        </div>
     </div>
     <script>
         let datos=[
@@ -97,10 +104,9 @@
             {"tematica":"juegos","direccion":"http://www.game.es/"}
         ]; 
 
-        
         function cargarTematicas(){
             //Opcion por defecto
-            let tematicaCombo = `<option value="" disabled selected>Seleccione una temática</option>`;
+            let tematicaCombo = `<option value="">Seleccione una temática</option>`;
             let tematicaArray =[];
             //Vamos a meter las tematicas en un array
             for(let dato of datos){
@@ -111,6 +117,8 @@
             for(let tema of tematicaSinDuplicados){
                 tematicaCombo += `<option value="${tema}">${tema}</option>`;
             }
+            //Añadimos la opcion de todos para que al seleccionarlo aparezcan todas las tematicas
+            tematicaCombo += `<option value="todos">---Todos---</option>`
             document.getElementById("tematicaElegida").innerHTML = tematicaCombo;
             console.log(tematicaArray);
         }
@@ -119,9 +127,10 @@
             let mostrarBusqueda ="<tr><th>Temática</th><th>Dirección</th>";
             let selectElement = document.getElementById("tematicaElegida");
             let tematicaParaComparar = selectElement.value; 
-
+            
+            //Si se elige la tematica te muestra la seleccionada y con todos aparecen todos
             for(let dato of datos){
-                if(tematicaParaComparar == dato.tematica){
+                if((tematicaParaComparar == dato.tematica)||(tematicaParaComparar == "todos")){
                     mostrarBusqueda += `<tr><td>${dato.tematica}</td><td>${dato.direccion}</td>`;
                 }
             }
