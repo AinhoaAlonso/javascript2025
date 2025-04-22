@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador tematica Combos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+            color: #333;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin: 20px 0;
+            font-size: 2.5em;
+        }
+    
+        div {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+    
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            border: 2px solid #2c3e50;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+    
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+    
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+    
+        table th {
+            background-color: #2c3e50;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+    
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    
+        table tr:hover {
+            background-color: #dfe6e9;
+        }
+    
+        table td a {
+            color: #3498db;
+            text-decoration: none;
+        }
+    
+        table td a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body onload="cargarTematicas()">
+
+    <div>
+        <h1>BUSCADOR</h1>
+        <!--<input type="text" id="buscador">-->
+        <select name="tematica" id="tematicaElegida" onchange="buscar()" ></select>
+        <!--<button onclick="buscar()">Buscar</button>-->
+        <br><br>
+        <table id="tabla-resultados"></table>
+    </div>
+    <script>
+        let datos=[
+            {"tematica":"deportes","direccion":"http://www.marca.es/"},
+            {"tematica":"libros","direccion":"http://www.puntolibro.es/"},
+            {"tematica":"deportes","direccion":"http://www.todofutbol.com/"},
+            {"tematica":"libros","direccion":"http://www.fnac.es/"},
+            {"tematica":"cocina","direccion":"http://www.fogones.es/"},
+            {"tematica":"juegos","direccion":"http://www.game.es/"}
+        ]; 
+
+        
+        function cargarTematicas(){
+            //Opcion por defecto
+            let tematicaCombo = `<option value="" disabled selected>Seleccione una temática</option>`;
+            let tematicaArray =[];
+            //Vamos a meter las tematicas en un array
+            for(let dato of datos){
+                tematicaArray.push(dato.tematica);  
+            }
+            //Pasamos ese array a un conjunto para evitar duplicados
+            let tematicaSinDuplicados = new Set(tematicaArray);
+            for(let tema of tematicaSinDuplicados){
+                tematicaCombo += `<option value="${tema}">${tema}</option>`;
+            }
+            document.getElementById("tematicaElegida").innerHTML = tematicaCombo;
+            console.log(tematicaArray);
+        }
+      
+        function buscar(){
+            let mostrarBusqueda ="<tr><th>Temática</th><th>Dirección</th>";
+            let selectElement = document.getElementById("tematicaElegida");
+            let tematicaParaComparar = selectElement.value; 
+
+            for(let dato of datos){
+                if(tematicaParaComparar == dato.tematica){
+                    mostrarBusqueda += `<tr><td>${dato.tematica}</td><td>${dato.direccion}</td>`;
+                }
+            }
+            document.getElementById("tabla-resultados").innerHTML=mostrarBusqueda;
+        }
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combo dinamico</title>
+</head>
+<body onload="cargarCiudades()">
+    <select id="ciudades"></select>
+    <button onclick="verCiudad()">Ver ciudad seleccionada</button>
+
+    <script>
+        let ciudades=["Caceres", "Madrid", "Bilbao", "Jaen","Soria", "Madrid", "Bilbao"];
+        function verCiudad(){
+            let ciudadSeleccionada = document.getElementById("ciudades").value;
+            console.log(ciudadSeleccionada);
+        }
+
+        //Se encarga de generar el contenido del desplegable dinamicamente a partir del array de ciudades
+        function cargarCiudades(){
+            //Creo un conjunto del array para que no haya ciudades duplicadas
+            let conjuntoCiudades = new Set(ciudades);
+            let html="";
+            for(let ciudad of conjuntoCiudades){
+                html += `<option>${ciudad}</option>`;
+                console.log(html);
+            }
+            document.getElementById("ciudades").innerHTML = html;
+        }
+    </script>
+</body>
+</html>

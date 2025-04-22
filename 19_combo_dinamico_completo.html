@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combo dinamico Completo</title>
+</head>
+<body onload="cargarCiudades()">
+    <select id="ciudades"></select>
+    <button onclick="verCiudad()">Ver poblacion seleccionada</button>
+    <div id="poblacionCiudadSeleccionada"></div>
+
+    <script>
+        //En este ejercicio queremos al seleccionar la ciudad nos aparezca la poblacion
+        //Creamos un objeto 
+        let ciudades=[
+            {ciudad:"Cáceres",poblacion:120000},
+            {ciudad:"Zaragoza",poblacion:680000},
+            {ciudad:"Ávila",poblacion:57000},
+            {ciudad:"Córdoba",poblacion:720000}
+        ]; 
+    
+        function verCiudad(){
+            let selectElement = document.getElementById("ciudades");
+           
+            let poblacion = selectElement.value;
+            console.log(poblacion);
+            //Nos coge el texto de la opcion de combo
+            let ciudad = selectElement.options[selectElement.selectedIndex].text;
+            console.log(ciudad);
+            document.getElementById("poblacionCiudadSeleccionada").innerHTML = `La ciudad ${ciudad} tiene ${poblacion} habitantes`;
+           
+        }
+
+        //Se encarga de generar el contenido del desplegable dinamicamente a partir del array de ciudades
+        function cargarCiudades(){
+            //Creo un conjunto del array para que no haya ciudades duplicadas
+            let conjuntoCiudades = new Set(ciudades);
+            let html="";
+            for(let ciudad of conjuntoCiudades){
+                html += `<option value="${ciudad.poblacion}">${ciudad.ciudad}</option>`;
+            }
+            document.getElementById("ciudades").innerHTML = html;
+            
+        }
+    </script>
+</body>
+</html>
