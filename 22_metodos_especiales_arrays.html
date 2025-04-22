@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metodos Especiales Arrays</title>
+</head>
+<body>
+    <script>
+        let numeros =[2,7,3,-4,8,1,6,4,10,9,-6,5];
+        //Vamos a comprobar si hay algun valor negativo
+        //Esta 1ª opcion sin saber metodos especiales
+        /*let indicador = false;
+        for(let num of numeros){
+            if (num<0){
+                indicador = true;
+            }
+        }*/
+
+        //Este metodo "some" devuelve un valor booleano si se cumple la condición, por eso ponemos el return
+        //Sintaxis array.some(funcion_booleana)
+        let indicador = numeros.some(function(num){
+            return num<0;
+        });
+
+        if(indicador==true){
+            console.log("Si hay negativos");
+        }else{
+            console.log("No hay negativos");
+        }
+
+        //metodo filter
+        //sintaxis array.filter(funcion_boolean).
+        //Devuelve un nuevo array con los elementos que cumplan la condicion
+        //Crea nuevo array con los numeros pares
+        let arrayNumPares = numeros.filter(function(num){
+            return num % 2 == 0;
+        });
+        console.log(arrayNumPares);
+
+        //metodo forEach
+        //sintaxis array.forEach(funcion)
+        //Aplica la funcion a cada uno de los elementos del Array, no devuelve nada por eso no tiene return
+        //Imprimir cada uno de los elementos del array
+        numeros.forEach(function(num){
+            console.log(num);
+        });
+
+        //Imprimir los negativos, sin for, ni if, ni variables
+        numeros.filter(function(num){
+            return num<0;
+        }).forEach(function(num){
+            console.log(num);
+        })
+    </script>
+</body>
+</html>
