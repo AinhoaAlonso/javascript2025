@@ -125,8 +125,7 @@
       
         function buscar(){
             let mostrarBusqueda ="<tr><th>Temática</th><th>Dirección</th>";
-            let selectElement = document.getElementById("tematicaElegida");
-            let tematicaParaComparar = selectElement.value; 
+            let tematicaParaComparar = document.getElementById("tematicaElegida").value; 
             
             //Si se elige la tematica te muestra la seleccionada y con todos aparecen todos
             for(let dato of datos){

@@ -81,12 +81,12 @@
         }
     </style>
 </head>
-<body onload="cargarTematicas()">
+<body>
     <div id="main-container">
         <div id="left-wrapper">
             <h1>BUSCADOR</h1>
             <!--Añadimos onchange para que cambie al seleccionar sin necesidad de boton-->
-            <select name="tematica" id="tematicaElegida" onchange="buscar()" ></select>
+            <select name="tematica" id="tematicaElegida"></select>
             <br><br>
             <table id="tabla-resultados"></table>
         </div>
@@ -104,38 +104,40 @@
             {"tematica":"juegos","direccion":"http://www.game.es/"}
         ]; 
 
-        function cargarTematicas(){
-            //Opcion por defecto
-            let tematicaCombo = `<option value="">Seleccione una temática</option>`;
-            let tematicaArray =[];
-            //Vamos a meter las tematicas en un array
-            for(let dato of datos){
-                tematicaArray.push(dato.tematica);  
-            }
-            //Pasamos ese array a un conjunto para evitar duplicados
-            let tematicaSinDuplicados = new Set(tematicaArray);
-            for(let tema of tematicaSinDuplicados){
-                tematicaCombo += `<option value="${tema}">${tema}</option>`;
-            }
-            //Añadimos la opcion de todos para que al seleccionarlo aparezcan todas las tematicas
-            tematicaCombo += `<option value="todos">---Todos---</option>`
-            document.getElementById("tematicaElegida").innerHTML = tematicaCombo;
-            console.log(tematicaArray);
-        }
-      
-        function buscar(){
-            let mostrarBusqueda ="<tr><th>Temática</th><th>Dirección</th>";
-            let selectElement = document.getElementById("tematicaElegida");
-            let tematicaParaComparar = selectElement.value; 
-            
-            //Si se elige la tematica te muestra la seleccionada y con todos aparecen todos
-            for(let dato of datos){
-                if((tematicaParaComparar == dato.tematica)||(tematicaParaComparar == "todos")){
-                    mostrarBusqueda += `<tr><td>${dato.tematica}</td><td>${dato.direccion}</td>`;
-                }
-            }
-            document.getElementById("tabla-resultados").innerHTML=mostrarBusqueda;
-        }
+        //Para cargar según abre la página
+        //Tambien se puede poner document.addEventListener("DOMContentLoaded"), es un objeto del propio documento, este evento se produce un vez completada la carga completa de la página
+        window.addEventListener("load",
+            ()=>{
+                //Opcion por defecto
+                let tematicaCombo = `<option value="">Seleccione una temática</option>`;
+
+                //Vamos a meter las tematicas en un array con un metodo map
+                /*let tematicaArray = datos.map(dato=>dato.tematica);
+                console.log("Map", tematicaArray);*/
+
+                //Voy a crear el conjunto con las tematicas sin duplicados pasandole directamente el array modificado con map con solo las tematicas
+                //Pasamos ese array a un conjunto para evitar duplicados y lo recorremos con un forEach
+                
+                let tematicaSinDuplicados = new Set(datos.map(dato=>dato.tematica));
+                tematicaSinDuplicados.forEach((tema)=>tematicaCombo += `<option value="${tema}">${tema}</option>`);
+                console.log("Tematica sin duplicados", tematicaSinDuplicados);
+
+                //Añadimos la opcion de todos para que al seleccionarlo aparezcan todas las tematicas
+                tematicaCombo += `<option value="todos">---Todos---</option>`
+                document.getElementById("tematicaElegida").innerHTML = tematicaCombo;
+            });
+        
+        //En vez de llamar a la funcion directamente en el select, lo cogemos con el id y llamamos al evento aqui directamente con la funcion
+        document.getElementById("tematicaElegida").addEventListener("change",
+            ()=>{
+                let mostrarBusqueda ="<tr><th>Temática</th><th>Dirección</th>";
+                let tematicaSeleccionada = document.getElementById("tematicaElegida").value; 
+                
+                //Si se elige la tematica te muestra la seleccionada y con "todos" aparecen todos
+                datos.filter((dato)=>dato.tematica == tematicaSeleccionada ||tematicaSeleccionada == "todos")
+                .forEach((dato)=> mostrarBusqueda += `<tr><td>${dato.tematica}</td><td>${dato.direccion}</td>`);
+                document.getElementById("tabla-resultados").innerHTML=mostrarBusqueda;
+        });
         
     </script>
     
