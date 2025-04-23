@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programa Notas</title>
+</head>
+<body>
+    <script>
+        let notas=[8.9,6.7,4.0,2.6,5.5,4.7,10.0];
+        //Mostrar los aprobados
+        notas.filter((nota)=>nota>=5).forEach((nota)=>console.log(nota));
+
+        //metodo reduce, lo reduce a un valor, en este caso suma todas las notas
+        let suma = notas.reduce((total,nota)=>total+nota);
+        console.log("La suma de notas es:", suma);
+        let media = suma/notas.length;
+        console.log(`La media de notas es:${media}`);
+
+        //metodo map, para transformar un array en otro array pero que guardas otros datos
+        //sintaxis .map(funcion_transformacion)
+        //Vamos a quitar a cada alumno 1 punto y lo vamos a guardar
+        notas = notas.map(nota=>nota-1);
+        console.log(notas);
+
+    </script>
+</body>
+</html>
