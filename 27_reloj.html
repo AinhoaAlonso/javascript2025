@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj</title>
+    <style>
+        #reloj {
+            
+            color: #333;
+            padding: 200px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 0 auto;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="reloj">
+    </div>
+
+    <script>
+        setInterval(()=>{
+            let fecha = new Date();
+            let horas = fecha.getHours();
+            let minutos = fecha.getMinutes();
+            let segundos = fecha.getSeconds();
+
+            if(horas<10){
+                horas="0" +horas;
+            }
+            if(minutos<10){
+                minutos="0" +minutos;
+            }
+            if(segundos<10){
+                segundos="0" +segundos;
+            }
+
+            document.getElementById("reloj").innerHTML=`${horas}:${minutos}:${segundos}`;
+        },1000);
+        
+        
+    </script>
+</body>
+</html>
