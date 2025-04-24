@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continentes</title>
+</head>
+<body>
+    <div id="">
+        <h1>Continentes</h1>
+        <h3>Sube el archivo de continentes</h3>
+        <input type="file" id="archivo-paises" accept=".json"/>
+        <div>
+            <select name="continentes" id="select-continentes"></select>
+        </div>
+    </div>
+    <script>
+        let paises =[];
+
+        document.getElementById("archivo-paises").addEventListener("change",
+            (event)=>{
+                //Recogemos el fichero seleccionado en el componente html
+                let fichero = event.target.files[0];
+                //Una vez que tenemos el fichero lo tenemos que leer
+                //1º lo creamos
+                let lectorFichero = new FileReader();
+                //2º programamos los sucesos que se van a producir durante la lectura del documento
+                lectorFichero.onload = (e)=>{
+                    //Volcamos el contenido del fichero en el array catalogo
+                    paises = e.target.result;//representa el contenido del fichero
+                    console.log(e.target.result);
+                    //Aqui tenemos que llamar a la funcion de cargarProductos
+                    cargarContinentes();
+                };
+                lectorFichero.onerror = ()=>{
+                    alert("Error en la lectura del fichero");
+                };
+                lectorFichero.readAsText(fichero);
+        });
+        function cargarContinentes(){
+            paises = JSON.parse(paises);
+            console.log(paises);
+
+            let mostrarCategorias = `<option value="">Selecciona un continente</option>`;
+        }
+    </script>
+</body>
+</html>
