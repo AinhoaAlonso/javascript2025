@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de la Compra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        #categoria-elegida {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        
+        #categoria-productos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        div {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #precio-total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Supermercado</h1>
+        <div>
+            <select name="categoria" id="categoria-elegida"></select>
+        </div>
+        <div>
+            <table id="catalogo-productos"></table>
+        </div>
+        <div>
+            <table id="carrito-compra"></table>
+        </div>
+        <div id="precio-total"></div>
+    </div>
+    <script>
+        
+        let productos=[
+            {producto:"pan",categoria:"Alimentación",precio:1.2},
+            {producto:"guantes",categoria:"Textil",precio:22.5},
+            {producto:"zapatos",categoria:"Textil",precio:65.0},
+            {producto:"pantalla",categoria:"Informática",precio:200},
+            {producto:"teclado",categoria:"Informática",precio:35.8},
+            {producto:"leche",categoria:"Alimentación",precio:2.0}
+        ]; 
+        let carritoProductos =[];
+        let productosFiltrados =[];
+        let categoriaSinDuplicados = new Set(productos.map(producto=>producto.categoria));
+
+        document.addEventListener("DOMContentLoaded",
+            ()=>{
+                let categoriaCombo = `<option value="">Seleccione una categoría</option>`;
+                categoriaSinDuplicados.forEach((categoria)=>categoriaCombo += `<option value="${categoria}">${categoria}</option>`);
+                categoriaCombo += `<option value="todos">---Todos---</option>`
+                document.getElementById("categoria-elegida").innerHTML = categoriaCombo;
+        });
+        document.getElementById("categoria-elegida").addEventListener("change",()=>{
+
+            let tablaProductos = "<tr><th>Producto</th><th>Categoría</th><th>Precio</th>";
+            let categoriaSeleccionada = document.getElementById("categoria-elegida").value;
+
+            productosFiltrados= productos.filter((producto)=>producto.categoria == categoriaSeleccionada ||categoriaSeleccionada == "todos");
+
+            productosFiltrados.forEach((producto, indice)=>{
+                tablaProductos += `<tr><td>${producto.producto}</td><td>${producto.categoria}</td><td>${producto.precio}</td><td><button onclick="agregarProducto(${indice})">Agregar</button></td></tr>`;
+            });
+            
+            document.getElementById("catalogo-productos").innerHTML=tablaProductos;
+        });
+
+        //Agregamos productos al carrito
+        function agregarProducto(indice){
+                console.log(productosFiltrados[indice]);
+                carritoProductos.push(productosFiltrados[indice]);
+                mostrarCarrito();
+        };
+
+        //Mostramos los productos en una tabla
+        function mostrarCarrito(){
+            console.log(carritoProductos);
+            let tablaCarrito = "<tr><th>Producto</th><th>Categoría</th><th>Precio</th>";
+            carritoProductos.forEach((producto,indice)=>{
+                tablaCarrito += `<tr><td>${producto.producto}</td><td>${producto.categoria}</td><td>${producto.precio}</td><td><button onclick="borrarProducto(${indice})">Eliminar</button></td></tr>`;
+            });
+            document.getElementById("carrito-compra").innerHTML=tablaCarrito;
+            totalCarrito();
+        };
+        
+        //Funcion para borrar un elemento del carrito
+        function borrarProducto(indice){
+            carritoProductos.splice(indice,1);
+            let tablaCarrito = "<tr><th>Producto</th><th>Categoría</th><th>Precio</th>";
+            carritoProductos.forEach((producto,indice)=>{
+                tablaCarrito += `<tr><td>${producto.producto}</td><td>${producto.categoria}</td><td>${producto.precio}</td><td><button onclick="borrarProducto(${indice})">Eliminar</button></td>`;
+
+            });
+            document.getElementById("carrito-compra").innerHTML=tablaCarrito;
+            totalCarrito();
+        }
+
+        //Calculo de la suma del carrito
+        function totalCarrito(){
+            let precioTotal = carritoProductos.map(producto => producto.precio)
+            .reduce((total,precio)=>total+precio,0);
+            document.getElementById("precio-total").innerHTML="Saldo total " +precioTotal+"€";
+        }
+         
+    </script>
+</body>
+</html>

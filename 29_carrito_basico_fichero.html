@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito con Fichero</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        #categoria-elegida {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        
+        #categoria-productos-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        div {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #precio-total {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <!--Vamos a seleccionar un archivo con el json en vez del objeto en el codigo-->
+        Selecciona un archivo: <input type="file" id="archivo" accept=".json"/>
+        <h1>Supermercado</h1>
+        <div>
+            <select name="categoria" id="categoria-elegida"></select>
+        </div>
+        <div>
+            <table id="catalogo-productos"></table>
+        </div>
+        <div>
+            <table id="carrito-compra"></table>
+        </div>
+        <div id="precio-total"></div>
+    </div>
+    <script>
+        
+        let productos=[];
+        let productosFiltrados =[];
+        let carritoProductos =[];
+
+        document.getElementById("archivo").addEventListener("change",
+            (event)=>{
+                //Recogemos el fichero seleccionado en el componente html
+                let fichero = event.target.files[0];
+                //Una vez que tenemos el fichero lo tenemos que leer
+                //1º lo creamos
+                let lectorFichero = new FileReader();
+                //2º programamos los sucesos que se van a producir durante la lectura del documento
+                lectorFichero.onload = (e)=>{
+                    //Volcamos el contenido del fichero en el array catalogo
+                    productos = e.target.result;//representa el contenido del fichero
+                    //Aqui tenemos que llamar a la funcion de cargarProductos
+                    cargarProductos();
+                };
+                lectorFichero.onerror = ()=>{
+                    alert("Error en la lectura del fichero");
+                };
+                lectorFichero.readAsText(fichero);
+        });
+
+        function cargarProductos(){
+                //Ahora tenemos dentro de productos el contenido de un fichero, como si fuese un string, lo tengo que convertir para que javascript lo entienda
+                //Si lo tuviesemos que hacer al reves seria JSON.stringify()
+                productos = JSON.parse(productos);
+
+                let categoriaCombo = `<option value="">Seleccione una categoría</option>`;
+                let categoriaSinDuplicados = new Set(productos.map(producto=>producto.categoria));
+                categoriaSinDuplicados.forEach((categoria)=>categoriaCombo += `<option value="${categoria}">${categoria}</option>`);
+                console.log("Categoria sin duplicados", categoriaSinDuplicados);
+                categoriaCombo += `<option value="todos">---Todos---</option>`
+                document.getElementById("categoria-elegida").innerHTML = categoriaCombo;
+        };
+
+        document.getElementById("categoria-elegida").addEventListener("change",()=>{
+
+            let tablaProductos = "<tr><th>Producto</th><th>Categoría</th><th>Precio</th>";
+            let categoriaSeleccionada = document.getElementById("categoria-elegida").value; 
+
+            productosFiltrados= productos.filter((producto)=>producto.categoria == categoriaSeleccionada ||categoriaSeleccionada == "todos");
+
+            productosFiltrados.forEach((producto, indice)=>{
+                tablaProductos += `<tr><td>${producto.producto}</td><td>${producto.categoria}</td><td>${producto.precio}</td><td><button onclick="agregarProducto(${indice})">Agregar</button></td></tr>`;
+            });
+            document.getElementById("catalogo-productos").innerHTML=tablaProductos;
+        });
+
+        //Agregamos productos al carrito
+        function agregarProducto(indice){
+                console.log(productosFiltrados[indice]);
+                carritoProductos.push(productosFiltrados[indice]);
+                mostrarCarrito();
+        };
+
+        //Mostramos los productos en una tabla
+        function mostrarCarrito(){
+            let tablaCarrito = "<tr><th>Producto</th><th>Categoría</th><th>Precio</th>";
+            carritoProductos.forEach((producto,indice)=>{
+                tablaCarrito += `<tr><td>${producto.producto}</td><td>${producto.categoria}</td><td>${producto.precio}</td><td><button onclick="borrarProducto(${indice})">Eliminar</button></td></tr>`;
+            });
+            document.getElementById("carrito-compra").innerHTML=tablaCarrito;
+            totalCarrito();
+        };
+        
+        //Funcion para borrar un elemento del carrito
+        function borrarProducto(indice){
+            carritoProductos.splice(indice,1);
+            let tablaCarrito = "<tr><th>Producto</th><th>Categoría</th><th>Precio</th>";
+            carritoProductos.forEach((producto,indice)=>{
+                tablaCarrito += `<tr><td>${producto.producto}</td><td>${producto.categoria}</td><td>${producto.precio}</td><td><button onclick="borrarProducto(${indice})">Eliminar</button></td></tr>`;
+
+            });
+            document.getElementById("carrito-compra").innerHTML=tablaCarrito;
+            totalCarrito();
+        }
+
+        //Calculo de la suma del carrito
+        function totalCarrito(){
+            let precioTotal = carritoProductos.map(producto => producto.precio)
+            .reduce((total,precio)=>total+precio,0);
+            document.getElementById("precio-total").innerHTML="Saldo total " +precioTotal+"€";
+        }
+         
+    </script>
+</body>
+</html>
