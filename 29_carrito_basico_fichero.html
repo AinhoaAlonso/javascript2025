@@ -142,7 +142,7 @@
                 let categoriaSinDuplicados = new Set(productos.map(producto=>producto.categoria));
                 categoriaSinDuplicados.forEach((categoria)=>categoriaCombo += `<option value="${categoria}">${categoria}</option>`);
                 console.log("Categoria sin duplicados", categoriaSinDuplicados);
-                categoriaCombo += `<option value="todos">---Todos---</option>`
+                categoriaCombo += `<option value="todos">---Todos---</option>`;
                 document.getElementById("categoria-elegida").innerHTML = categoriaCombo;
         };
 

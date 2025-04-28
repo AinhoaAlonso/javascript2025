@@ -126,6 +126,7 @@
                 mostrarContinentes += `<option value="${continente}">${continente}</option>`;  
             });
             console.log("mostrarContinentes",mostrarContinentes);
+            mostrarContinentes += `<option value="todos">---Todos---</option>`;
             document.getElementById("select-continentes").innerHTML=mostrarContinentes;
             
         }
@@ -133,7 +134,7 @@
             let tablaPaises = "<tr><th>Nombre</th><th>Capital</th><th>Poblacion</th><th>Bandera</th>";
             let continenteSeleccionado = document.getElementById("select-continentes").value;
 
-            paisesFiltradosPorContinente = paises.filter((pais)=>pais.region==continenteSeleccionado);
+            paisesFiltradosPorContinente = paises.filter((pais)=>pais.region==continenteSeleccionado ||continenteSeleccionado == "todos");
             paisesFiltradosPorContinente.forEach((pais)=>{
                 tablaPaises += `<tr><td>${pais.name}</td><td>${pais.capital}</td><td>${pais.population}</td><td><img src="${pais.flag}" width="75px"></td></tr>`
             })
